@@ -172,7 +172,7 @@ void loop(){
       // Implémentez ici la loi de commande PI
       //ecart = capActuel_filt - capPrecedent   ;         //calcul de l'ecart entre le cap actuel et le cap consigne variant avec le ramp on setpoint
 
-      ecart1 = fmod((capConsigne - capActuel_filt + 180.0), 360.0) - 180.0;    //calcul de l'ecart entre le cap actuel et le cap consigne variant avec le ramp on setpoint
+      ecart1 = fmod((capPrecedent - capActuel_filt + 180.0), 360.0) - 180.0;    //calcul de l'ecart entre le cap actuel et le cap consigne variant avec le ramp on setpoint
       
       if (ecart1 < -180.0){
         ecart1 += 360.0;

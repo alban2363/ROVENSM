@@ -154,7 +154,7 @@ bouton_retour_param.pack(side="bottom", pady=30)
 frame_kp = tk.Frame(frame_parametres, bg="#7df87b")
 frame_kp.pack(pady=20)
 
-label_kp = tk.Label(frame_kp, text="Valeur Kp :", bg="#7df87b", font=("Courier", 30, "bold"))
+label_kp = tk.Label(frame_kp, text="Valeur Kp :", bg="#7df87b", font=("Courier", 20, "bold"))
 label_kp.pack(side="left", padx=10)
 
 entry_kp = tk.Entry(frame_kp, font=("Courier", 25), width=20)
@@ -164,14 +164,14 @@ label_affichage_kp =tk.Label(frame_kp , text="En attente", bg="#7df87b", font=("
 label_affichage_kp.pack(side="left", padx=10)
 
 
-btn_valider_kp= tk.Button(frame_kp, command= f_Kp, text="Valider", font=("Courier", 30), bg='grey')
+btn_valider_kp= tk.Button(frame_kp, command= f_Kp, text="Valider", font=("Courier", 20), bg='grey')
 btn_valider_kp.pack(side = "left", pady=10)
 
 # --- Section Ti ---
 frame_ti = tk.Frame(frame_parametres, bg="#7df87b")
 frame_ti.pack(pady=20)
 
-label_ti = tk.Label(frame_ti, text="Valeur Ti :", bg="#7df87b", font=("Courier", 30, "bold"))
+label_ti = tk.Label(frame_ti, text="Valeur Ti :", bg="#7df87b", font=("Courier", 20, "bold"))
 label_ti.pack(side="left", padx=10)
 
 entry_ti = tk.Entry(frame_ti, font=("Courier", 25), width=20)
@@ -180,23 +180,23 @@ entry_ti.pack(side="left", padx=10)
 label_affichage_ti =tk.Label(frame_ti, text="En attente", bg="#7df87b", font=("Courier", 20, "bold"))
 label_affichage_ti.pack(side="left", padx=10)
 
-btn_valider_Ti= tk.Button(frame_ti, command= f_Ti, text="Valider", font=("Courier", 30), bg='grey')
+btn_valider_Ti= tk.Button(frame_ti, command= f_Ti, text="Valider", font=("Courier", 20), bg='grey')
 btn_valider_Ti.pack(side = "left", pady=10)
 
 # --- Rapport cyclique alpha(%) ---
 frame_alpha = tk.Frame(frame_parametres, bg="#7df87b")
 frame_alpha.pack(pady=20)
 
-label_alpha = tk.Label(frame_alpha, text="Valeur rapport cyclique alpha (%) :", bg="#7df87b", font=("Courier", 30, "bold"))
+label_alpha = tk.Label(frame_alpha, text="Valeur rapport cyclique alpha (%) :", bg="#7df87b", font=("Courier", 20, "bold"))
 label_alpha.pack(side="left", padx=10)
 
-entry_alpha = tk.Entry(frame_alpha, font=("Courier", 25), width=20)
+entry_alpha = tk.Entry(frame_alpha, font=("Courier", 25), width=10)
 entry_alpha.pack(side="left", padx=10)
 
 label_affichage_alpha =tk.Label(frame_alpha, text="En attente", bg="#7df87b", font=("Courier", 20, "bold"))
 label_affichage_alpha.pack(side="left", padx=10)
 
-btn_valider_alpha= tk.Button(frame_alpha, command= f_changer_alpha, text="Valider", font=("Courier", 30), bg='grey')
+btn_valider_alpha= tk.Button(frame_alpha, command= f_changer_alpha, text="Valider", font=("Courier", 20), bg='grey')
 btn_valider_alpha.pack(side = "left", pady=10)
 # ---------------------- Frame Pilote Automatique ----------------------
 frame_pilote_auto = tk.Frame(root, bg="#b2daf9")
@@ -206,7 +206,7 @@ label_pilote.pack(pady=20)
 
 # -------- Section Consigne --------
 frame_consigne = tk.Frame(frame_pilote_auto, bg="#b2daf9")
-frame_consigne.pack(pady=20)
+frame_consigne.pack(pady=10)
 
 label_consigne = tk.Label(frame_consigne, text="Cap Consigne (0 - 360)", bg="#b2daf9", font=("Courier", 25, "bold"))
 label_consigne.pack(pady=10)
