@@ -43,12 +43,12 @@ unsigned int Te, Tch;                       // variables pour la gestion du temp
 unsigned long DateEch, DateChgt;            // Dates (nombres réels)
 int dt =100;                                 // durée en millisecondes souhaitée entre deux cycles (mesure -> commande)
  
-float kp =0.8 ;         // Gain proportionnel. Préciser la valeur
-float Ti = 50  ;       // Temps intégral. Préciser la valeur. Unités ? millisecondes
+float kp =0.3;         // Gain proportionnel. Préciser la valeur
+float Ti =2000  ;       // Temps intégral. Préciser la valeur. Unités ? millisecondes
 float ui = 0  ;         // valeur initiale de l'action intégrale. Préciser la valeur. Unités ?
 
 float pente=10;         //pente de la consigne 10°/s
-bool modeAuto= false ;   //booléen pour le mode Auto ou mode Manu
+bool modeAuto= true ;   //booléen pour le mode Auto ou mode Manu
 
 float alpha_pourcent =39.21;
 float alpha_bin = 100;
@@ -76,9 +76,9 @@ void setup() {
   
   }
   
-  for (int i = 0; i < N; i++) {
-    angles[i] = 0;
-  }
+//  for (int i = 0; i < N; i++) {
+//    angles[i] = 0;
+//  }
 
   //define pins
   pinMode(directionPin1, OUTPUT);
@@ -138,14 +138,14 @@ void loop(){
 
     
 
-    total -= angles[index];              // Enlève l'ancienne valeur
-    angles[index] = capActuel;      // Remplace par la nouvelle
-    total += capActuel;             // Ajoute la nouvelle valeur
-
-    index = (index + 1) % N;             // Passe à la prochaine case
-
-    capActuel_filt = total / N;                 // Calcule la moyenne
-
+//    total -= angles[index];              // Enlève l'ancienne valeur
+//    angles[index] = capActuel;      // Remplace par la nouvelle
+//    total += capActuel;             // Ajoute la nouvelle valeur
+//
+//    index = (index + 1) % N;             // Passe à la prochaine case
+//
+//    capActuel_filt = total / N;                 // Calcule la moyenne
+    capActuel_filt = capActuel;
     
     //consigne en rampe
     if (modeAuto== true) {                              //Mode AUTO
@@ -179,8 +179,16 @@ void loop(){
       }
       
       ui = ui + (kp*dt*ecart1)/Ti    ;                   //calcul de la commande intégrale
-      commande = kp*ecart1 + ui  ;                    // calcul de la commande    //calcul de la commande PI
-
+      commande = kp*ecart1 + ui ;                    // calcul de la commande    //calcul de la commande PI
+      if (commande > alpha_bin) {
+        commande = alpha_bin;
+        ui = ui - (kp*dt*ecart1)/Ti    ;
+      }
+      if (commande < - alpha_bin) {
+        commande = -alpha_bin;
+        ui = ui - (kp*dt*ecart1)/Ti    ;
+      }
+      
       
      
     }
@@ -198,7 +206,8 @@ void loop(){
 
     // Ajustement du rapport cyclique du hacheur (0 => 0 ; 255 =>100%) gauche et droite selon l’erreur de cap
     
-    int alpha = constrain(abs(commande), 0, alpha_bin);
+    //int alpha = constrain(abs(commande), 0, alpha_bin);
+    int alpha = abs(commande);
     digitalWrite(brakePin1, LOW); // Désactiver le frein
     digitalWrite(brakePin2, LOW); // Désactiver le frein
     
@@ -219,19 +228,19 @@ void loop(){
     //Serial.print(capActuel);
     //Serial.print("Cap Actuel : ");
     //Serial.print(",");
-    Serial.print(capActuel_filt);;
+    Serial.print(capActuel_filt);
     Serial.print(",");
     Serial.print(capConsigne);
+//    Serial.print(",");
+//    Serial.print(kp);
+//    Serial.print(",");
+//    Serial.print(Ti);
     Serial.print(",");
-    Serial.print(kp);
-    Serial.print(",");
-    Serial.print(Ti);
-    Serial.print(",");
-    Serial.println(alpha_pourcent);
+    Serial.print(alpha);
     //Serial.print(" | Cap Cible : "); 
     //Serial.print(","); Serial.println(ecart1);
-    //Serial.print(","); Serial.print(ecart1);
-    //Serial.print(","); Serial.println( commande );
+    Serial.print(","); Serial.print(ecart1);
+    Serial.print(","); Serial.println(commande);
     //Serial.println( commande );
 
   }
