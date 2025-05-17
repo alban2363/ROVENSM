@@ -28,12 +28,6 @@ bool directionState1 = false ;
 bool directionState2 = false ;
 
 DFRobot_BMM150_I2C bmm150(&Wire, I2C_ADDRESS_4);
-
-//Moyenne mobile
-const int N = 20;                  // Taille de la fenêtre
-float angles[N];                  // Tableau pour stocker les dernières valeurs
-int index = 0;                    // Position actuelle dans le tableau
-float total = 0;                  // Somme des valeurs
 float capActuel_filt = 0;
 
 float capActuel , ecart,ecart1, commande;          // variables du correcteur (nombres réels)
@@ -76,9 +70,6 @@ void setup() {
   
   }
   
-//  for (int i = 0; i < N; i++) {
-//    angles[i] = 0;
-//  }
 
   //define pins
   pinMode(directionPin1, OUTPUT);
@@ -138,14 +129,6 @@ void loop(){
 
     
 
-//    total -= angles[index];              // Enlève l'ancienne valeur
-//    angles[index] = capActuel;      // Remplace par la nouvelle
-//    total += capActuel;             // Ajoute la nouvelle valeur
-//
-//    index = (index + 1) % N;             // Passe à la prochaine case
-//
-//    capActuel_filt = total / N;                 // Calcule la moyenne
-    capActuel_filt = capActuel;
     
     //consigne en rampe
     if (modeAuto== true) {                              //Mode AUTO
