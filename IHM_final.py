@@ -54,7 +54,7 @@ def f_Kp():
 def f_Ti():
     try:
         valeur = float(entry_ti.get())
-        if valeur >= 0 and valeur <= 500 :
+        if valeur >= 0.00 and valeur <= 5.00 :
             envoyer_variable(5,valeur)
             entry_ti.delete(0,tk.END)
         else :
@@ -88,7 +88,7 @@ def f_changer_alpha():
 def envoyer_variable(identifiant, valeur):
     data = identifiant.to_bytes(1, 'little')
     valeur_int = int(valeur * 100)  # conserver 2 décimales
-    data += valeur_int.to_bytes(2, 'little', signed=True)
+    data += valeur_int.to_bytes(2, 'little', signed=False)
     ser.write(data)
     time.sleep(0.2)
 

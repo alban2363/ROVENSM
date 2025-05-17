@@ -48,7 +48,7 @@ float Ti =2000  ;       // Temps intégral. Préciser la valeur. Unités ? milli
 float ui = 0  ;         // valeur initiale de l'action intégrale. Préciser la valeur. Unités ?
 
 float pente=10;         //pente de la consigne 10°/s
-bool modeAuto= true ;   //booléen pour le mode Auto ou mode Manu
+bool modeAuto= false ;   //booléen pour le mode Auto ou mode Manu
 
 float alpha_pourcent =39.21;
 float alpha_bin = 100;
@@ -98,7 +98,7 @@ void loop(){
     byte lowByte = Serial.read();
     byte highByte = Serial.read();
 
-    int valeur_int = (highByte << 8) | lowByte ;
+    uint16_t valeur_int = (highByte << 8) | lowByte ;
 
     float valeur = valeur_int / 100.0 ; 
 
@@ -120,7 +120,7 @@ void loop(){
       }
     if (identifiant == 5)
       {
-       Ti= valeur;
+       Ti= valeur*1000;
       }
     if (identifiant == 6)
       {
@@ -180,11 +180,13 @@ void loop(){
       
       ui = ui + (kp*dt*ecart1)/Ti    ;                   //calcul de la commande intégrale
       commande = kp*ecart1 + ui ;                    // calcul de la commande    //calcul de la commande PI
-      if (commande > alpha_bin) {
+      if (commande > alpha_bin) 
+      {
         commande = alpha_bin;
-        ui = ui - (kp*dt*ecart1)/Ti    ;
+        ui = ui - (kp*dt*ecart1)/Ti    ;              //windup
       }
-      if (commande < - alpha_bin) {
+      if (commande < - alpha_bin) 
+      {
         commande = -alpha_bin;
         ui = ui - (kp*dt*ecart1)/Ti    ;
       }
@@ -206,8 +208,8 @@ void loop(){
 
     // Ajustement du rapport cyclique du hacheur (0 => 0 ; 255 =>100%) gauche et droite selon l’erreur de cap
     
-    //int alpha = constrain(abs(commande), 0, alpha_bin);
-    int alpha = abs(commande);
+    int alpha = constrain(abs(commande), 0, alpha_bin);
+    //int alpha = abs(commande);
     digitalWrite(brakePin1, LOW); // Désactiver le frein
     digitalWrite(brakePin2, LOW); // Désactiver le frein
     
@@ -231,16 +233,17 @@ void loop(){
     Serial.print(capActuel_filt);
     Serial.print(",");
     Serial.print(capConsigne);
-//    Serial.print(",");
-//    Serial.print(kp);
-//    Serial.print(",");
-//    Serial.print(Ti);
     Serial.print(",");
-    Serial.print(alpha);
+    Serial.print(kp);
+    Serial.print(",");
+    Serial.print(Ti/1000);
+    Serial.print(",");
+    Serial.println(alpha_pourcent);
+    //Serial.println(alpha);
     //Serial.print(" | Cap Cible : "); 
     //Serial.print(","); Serial.println(ecart1);
-    Serial.print(","); Serial.print(ecart1);
-    Serial.print(","); Serial.println(commande);
+    //Serial.print(","); Serial.print(ecart1);
+    //Serial.print(","); Serial.println(commande);
     //Serial.println( commande );
 
   }
