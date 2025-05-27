@@ -151,7 +151,7 @@ void loop(){
     if (modeAuto== true) {                              //Mode AUTO
       //consigne en rampe(ramp on setpoint)
       if ( capConsigne > capPrecedent ) {
-        capPrecedent += pente/(DateEch*60*1000) ;
+        capPrecedent += pente/(DateEch*60*1000) ; // a quoi correspond 60 ? 
         if ( capConsigne <= capPrecedent ) {
           capPrecedent = capConsigne;
           //Serial.println(capConsigne);
@@ -208,7 +208,7 @@ void loop(){
 
     // Ajustement du rapport cyclique du hacheur (0 => 0 ; 255 =>100%) gauche et droite selon l’erreur de cap
     
-    int alpha = constrain(abs(commande), 0, alpha_bin);
+    int alpha = constrain(abs(commande), 0, alpha_bin); // A quoi 
     //int alpha = abs(commande);
     digitalWrite(brakePin1, LOW); // Désactiver le frein
     digitalWrite(brakePin2, LOW); // Désactiver le frein
