@@ -170,7 +170,7 @@ void loop(){
       }
 
       // Implémentez ici la loi de commande PI
-      //ecart = capActuel_filt - capPrecedent   ;         //calcul de l'ecart entre le cap actuel et le cap consigne variant avec le ramp on setpoint
+      //ecart = capActuel_filt - capPrecedent   ;   //supprimer cette ligne ? 
 
       ecart1 = fmod((capPrecedent - capActuel_filt + 180.0), 360.0) - 180.0;    //calcul de l'ecart entre le cap actuel et le cap consigne variant avec le ramp on setpoint
       
@@ -208,8 +208,8 @@ void loop(){
 
     // Ajustement du rapport cyclique du hacheur (0 => 0 ; 255 =>100%) gauche et droite selon l’erreur de cap
     
-    int alpha = constrain(abs(commande), 0, alpha_bin); // A quoi 
-    //int alpha = abs(commande);
+    int alpha = constrain(abs(commande), 0, alpha_bin); // On prend la valeur absolue car Analogwrite ne sait gérer que des nombres positifs
+    //int alpha = abs(commande); // on peut enlever cette ligne 
     digitalWrite(brakePin1, LOW); // Désactiver le frein
     digitalWrite(brakePin2, LOW); // Désactiver le frein
     
@@ -222,8 +222,8 @@ void loop(){
       digitalWrite(directionPin2, LOW); // Moteur 2 avant
     }
     
-    analogWrite(pwmPin1, alpha);
-    analogWrite(pwmPin2, alpha);  
+    analogWrite(pwmPin1, alpha); //envoie un signal PWM dont le rapport cyclique --> alpha, sur la broche pwmPin1 (moteur 1 )
+    analogWrite(pwmPin2, alpha); //envoie un signal PWM dont le rapport cyclique --> alpha, sur la broche pwmPin2 (deuxième moteur)
 
     // Affichage des données
     //Serial.print("Cap Actuel : ");
