@@ -51,7 +51,7 @@ float pente=10;         //pente de la consigne 10°/s
 bool modeAuto= false ;   //booléen pour le mode Auto ou mode Manu
 
 float alpha_pourcent =39.21;
-float alpha_bin = 100;
+float alpha_bin = 100; // pourquoi pas initialisé a 255, par ce qu'on on se bride à -de la moitié de la capacité
 
 
 #define BMM150_CS D3
